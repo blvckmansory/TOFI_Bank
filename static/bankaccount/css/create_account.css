@@ -1,0 +1,28 @@
+select{
+    text-align: center;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Rubik", sans-serif;
+    font-size: 18px;
+    width:300px;
+    height:35px;
+    margin-bottom: 5px;
+}
+
+input {
+    text-align: center;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Rubik", sans-serif;
+    font-size: 18px;
+    width:300px;
+    height:35px;
+    margin-bottom: 10px;
+}
+
+form.column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
