@@ -1,0 +1,24 @@
+{% extends 'user/base_form.html' %}
+
+{% block content %}
+<header>
+        <h1>Добро пожаловать!</h1>
+        <p>Это страница входа</p>
+</header>
+<main>
+        <p>Добро пожаловать в наш банк</p>
+        <p>Если у вас нет аккаунта, предлагаем зарегистрироваться в нашем приложении</p>
+        <div class="registration-link">
+            <a href="{% url 'Registration' %}">Регистрация</a>
+        </div>
+        <form method="POST" action="{% url 'Login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+<!--            <input type="text" name="email" placeholder="Email...">-->
+<!--            <input type="text" name="password" placeholder="Password...">-->
+    <button type="submit">Login</button>
+</form>
+
+
+</main>
+{% endblock %}

@@ -1,0 +1,142 @@
+header {
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+main {
+    max-width: 100%;
+    max-height: 500px;
+    margin: 0 auto;
+    padding: 20px;
+
+    /* overflow-y: auto;  */
+}
+
+main.block{
+    display: flex;
+    justify-content: space-between;
+}
+
+.account-list,
+.create-account {
+    /* flex: 1;  */
+    margin-right: 0px;
+    margin-left: -50px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+table {
+    margin: 0 auto; 
+    border-collapse: collapse; 
+}
+
+th, td {
+    border: 1px solid #ddd; /* Добавляет границу вокруг каждой ячейки */
+    padding: 8px; 
+    /* text-align: center;  */
+}
+
+th {
+    background-color: #f2f2f2; 
+}
+
+.account-list{
+    width: 65%;
+}
+
+.create-account{
+    width: 35%;
+}
+
+.registration-link {
+    margin-top: 20px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+  height: 50px;
+  width: 100px;
+  border-radius: 20px;
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50; /* Green */
+}
+
+button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+
+div.conic {
+    position: relative;
+    margin: auto;
+    width: 500px;
+    height: 500px;
+    font-size: 20px;
+    border-radius: 10px;
+    background: WhiteSmoke;
+    transition: all .3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        filter: contrast(1.1);
+    }
+
+    &:active {
+        filter: contrast(0.9);
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        border: 5px solid LightGray	;
+        transition: all .5s;
+        animation: clippath 3s infinite linear;
+        border-radius: 10px;
+    }
+
+    &::after {
+        animation: clippath 3s infinite -1.5s linear;
+    }
+}
+
+@keyframes clippath {
+    0%,
+    100% {
+        clip-path: inset(0 0 98% 0);
+    }
+
+    25% {
+        clip-path: inset(0 98% 0 0);
+    }
+    50% {
+        clip-path: inset(98% 0 0 0);
+    }
+    75% {
+        clip-path: inset(0 0 0 98%);
+    }
+}
+
+.bg::before {
+    background: rgba(255, 215, 0, .5);
+}

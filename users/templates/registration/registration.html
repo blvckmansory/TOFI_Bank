@@ -1,0 +1,97 @@
+{% extends 'user/base_form.html' %}
+
+
+{% block content %}
+<h1>Регистрация</h1>
+
+<form method="post" action="{% url 'registration' %}" class="form">
+       {% csrf_token %}
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            <span class="error">{{ form.username.errors }}</span>
+        </div>
+
+         <div class="form-group">
+        {{ form.surname.label_tag }}
+        {{ form.surname }}
+        <span class="error">{{ form.surname.errors }}</span>
+        </div>
+
+        <div class="form-group">
+        {{ form.patronymic.label_tag }}
+        {{ form.patronymic }}
+        <span class="error">{{ form.patronymic.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            <span class="error">{{ form.email.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+            <span class="error">{{ form.password1.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+            <span class="error">{{ form.password_confirm.errors }}</span>
+        </div>
+
+    <!-- поля для документов -->
+        <div class="form-group">
+            {{ form.document_type.label_tag }}
+            {{ form.document_type }}
+        <span class="error">{{ form.document_type.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.document_number.label_tag }}
+            {{ form.document_number }}
+        <span class="error">{{ form.document_number.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.identification_number.label_tag }}
+            {{ form.identification_number }}
+        <span class="error">{{ form.identification_number.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.expiry_date.label_tag }}
+            {{ form.expiry_date }}
+        <span class="error">{{ form.expiry_date.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.date_of_birth.label_tag }}
+            {{ form.date_of_birth }}
+        <span class="error">{{ form.date_of_birth.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.issued_by.label_tag }}
+            {{ form.issued_by }}
+        <span class="error">{{ form.issued_by.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.issuing_authority_code.label_tag }}
+            {{ form.issuing_authority_code }}
+        <span class="error">{{ form.issuing_authority_code.errors }}</span>
+        </div>
+
+        <div class="form-group">
+            {{ form.place_of_birth.label_tag }}
+            {{ form.place_of_birth }}
+        <span class="error">{{ form.place_of_birth.errors }}</span>
+        </div>
+
+<!--    {{ form.as_p }}-->
+    <button type="submit">Register</button>
+</form>
+{% endblock %}

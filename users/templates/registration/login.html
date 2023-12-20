@@ -1,0 +1,46 @@
+{% extends 'user/base_form.html' %}
+<!-- {% load static %}-->
+{% block content %}
+<!--<head>-->
+<!--         <link type="text/css" href="{% static 'users/css/login.css' %}" rel="stylesheet" />-->
+<!--</head>-->
+<header>
+        <h1>Добро пожаловать!</h1>
+        <p>Это страница входа нашего банка:)</p>
+</header>
+<main>
+        <p>Добро пожаловать в наш банк</p>
+        <p>Если у вас нет аккаунта, предлагаем зарегистрироваться в нашем приложении</p>
+        <div class="registration-link">
+            <a href="{% url 'registration' %}">Регистрация</a>
+        </div>
+        <hr/>
+
+        {% if form.errors %}
+           <p>{{ form.errors.err }}</p>
+        {% endif %}
+
+
+        <form method="POST" action="{% url 'login' %}" class="form">
+              {% csrf_token %}
+            <div class="form-group">
+<!--               Наименование поля  -->
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+<!--              {{ form.as_p }}-->
+            <br>
+              <button type="submit" >Login</button>
+        </form>
+     
+        <br>
+    <p>Нажмите сюда, если: <a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+
+
+</main>
+{% endblock %}

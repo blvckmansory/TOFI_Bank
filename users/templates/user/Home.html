@@ -1,0 +1,25 @@
+{% extends 'user/base_form.html' %}
+
+{% block content %}
+
+<header>
+        <h1>Добро пожаловать!</h1>
+        <p>Это домашная страница</p>
+</header>
+<main>
+
+        <p>Добро пожаловать в наш банк, {{ user.username }}!</p>
+
+
+        {% if user.is_authenticated %}
+           <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+           <a href="{% url 'login' %}">Вход</a> |
+           <a href="{% url 'registration' %}">Регистрация</a>
+        {% endif %}
+
+</form>
+
+
+</main>
+{% endblock %}

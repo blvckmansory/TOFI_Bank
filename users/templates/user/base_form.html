@@ -1,0 +1,102 @@
+<!-- Подключение статических файлов -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'users/css/base.css' %}" rel="stylesheet" />
+    <link type="text/css" href="{% static 'users/css/login.css' %}" rel="stylesheet" />
+	<script src="{% static 'loans/js/session_timer.js' %}"></script>
+
+</head>
+<body>
+
+<table class="table-page" border=0 cellpadding="0" cellspacing="0">
+<tr><td valign=top>
+{% block mainmenu %}
+<!--	Header    -->
+		<div class="header">
+			<ul id="mainmenu" class="mainmenu">
+			<li class="logo">
+				<a href="{% url 'login' %}">
+					<div class="logo">MyBank</div>
+				</a>
+			</li>
+
+<!--			Тут был код и он пока что в блокноте	-->
+
+			{% if request.user.is_authenticated %}
+			<!-- {{ seconds_until_session_end }} -->
+			<!-- 00:01:00 <span id="timer"></span>-->
+				<li class="last"> Время вашей сессии:{{ seconds_until_session_end }}   | {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+			{% else %}
+				<li class="last"><a href="{% url 'registration' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a></li>
+			{% endif %}
+
+			</ul>
+
+			<div class="clear"></div>
+		</div>
+
+{% endblock mainmenu %}
+
+
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+	<tr>
+		{% if request.user.is_authenticated %}
+			<!-- Sidebar слева -->
+			<td valign="top" class="left-chapters">
+				<ul id="leftchapters">
+
+					<li><a href="{% url 'Home' %}">Меню:</a></li>
+
+			<!--	В ссылках пока что стоит заглушка	-->
+					{% for item in menu %}
+						<li><a href="{% url item.url_name %}" class="greyColor">{{ item.title }}</a></li>
+					{% endfor %}
+
+				</ul>
+			</td>
+		<!-- Конец Sidebar'а -->
+		{% endif %}
+
+			<td valign="top" class="content">
+			<!-- Блок контента -->
+				{% if messages %}
+						{% for message in messages %}
+						<div class="alert alert-{{ message.tags }}">
+							{{ message }}
+						</div>
+						{% endfor %}
+				{% endif %}
+
+				<div class="content-text">
+
+				{% block content %}
+				<!--	Выход из приложения если не действовать в течении определенного времени	-->
+						{{ redirect_to_login_immediately }}
+						{% for message in messages %}
+							<div class="message {{ message.tags }}">
+								{{ message }}
+							</div>
+						{% endfor %}
+				{% endblock %}
+				</div>
+			<!-- Конец блока контента -->
+
+			</td>
+	</tr>
+</table>
+</td></tr>
+<!-- Footer -->
+<tr><td valign=top>
+	<div id="footer">
+		<p>&copy; 2023 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>
+		<p>&copy; Created by Artem Yauchar </p>
+	</div>
+</td></tr></table>
+<!-- Конец footer'а и страницы -->
+
+</body>
+</html>
