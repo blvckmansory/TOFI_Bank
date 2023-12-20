@@ -1,0 +1,102 @@
+{% extends 'user/base_form.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+        <link type="text/css" href="{% static 'loans/css/Apply_for_a_loan.css' %}" rel="stylesheet">
+</head>
+
+<header>
+        <h1>Оформление кредита</h1>
+        <p>Оставляйте запрос для получения кредита, {{ user.username }}!</p>
+</header>
+
+<br/>
+
+<div class="container">
+        {% if user.is_authenticated %}
+
+        <div class="container__loan-calculator">
+                <h2>Кредитный калькулятор</h2>
+                <p>Введите параметры кредита, чтобы рассчитать его сумму и ежемесячный платеж:</p>
+                <input type="number" id="loanAmount" placeholder="Сумма кредита" min="0" max="100000" oninput="validity.valid||(value='');">
+                {% csrf_token %}
+                <label for="{{ form.loan_type.id_for_label }}">Тип кредита: </label>
+                {{ form.loan_type }}
+                <label for="{{ form.currency_loan.id_for_label }}">Валюта: </label>
+                {{ form.currency_loan }}
+                <input type="number" id="loanTerm" placeholder="Срок кредита в месяцах" min="1" max="360" oninput="validity.valid||(value='360')">
+                <button onclick="calculateLoan()">Рассчитать</button>
+                <p id="totalPayment">Итоговая сумма платежа: </p>
+                <p id="procent">Проценты годовых: </p>
+                <p id="monthlyPayment">Ежемесячный платеж: </p>
+        </div>
+
+        <div class="container__make-loan">
+                <form method="post" action="{% url 'apply_for_loan' %}">
+                        {% csrf_token %}
+                        <p>Выберите тип кредита:</p>
+                        {{ form.loan_type }}
+                        <p>Введите на какой срок (месяцев) вы хотите оформить кредит. Минимальный срок - 1 месяц:</p>
+                        {{ form.months }}
+                        <p>Сумма кредита, который вы запрашиваете (Минимальная сумма - 100.00 у.е. Максимальная сумма - 100 000.00 у.е.):</p>
+                        {{ form.issue_amount }}
+                        <p>Валюта кредитирования:</p>
+                        {{ form.currency_loan }}
+                        <p>Напишите номер счета, соответсвующий валюте кредитирования, если у вас нет данного счета, то вам придется его создать!</p>
+                        {{ form.destination_account_number }}
+                        <br/>
+                        <button type="submit" class="apply">Подать на получение кредита</button>
+                </form>
+        </div>
+
+        <div class="container__list-of-loans">
+                <h2>Ваши банковские счета:</h2>
+                <table>
+                <thead>
+                        <tr>
+                        <th>Тип счета</th>
+                        <th>Номер счета</th>
+                        <th>Сумма выдачи</th>
+                        <th>Сумма возврата</th>
+                        <th>Оплачено</th>
+                        <th>Остаток</th>
+                        <th>Платеж в месяц</th>
+                        <th>Валюта</th>
+                        <th>Дата начала</th>
+                        <th>Последний срок</th>
+                        <th>Кол-во месяцев оплаты</th>
+                        <th>Статус</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        {% for loan in loans  %}
+                        <tr>
+                                <td>{{ loan.get_loan_type_display }}</td>
+<!--                                <td>{{ loan.decrypted_loan_number }}</td>-->
+                                <td>{{ loan.loan_number|slice:":3"|ljust:"12" }}**********{{loan.loan_number|slice:"-3:"}}</td>
+                                <td>{{ loan.issue_amount }}</td>
+                                <td>{{ loan.refund_amount }}</td>
+                                <td>{{ loan.paid }}</td>
+                                <td>{{ loan.remainder }}</td>
+                                <td>{{ loan.payment_amount_per_month }}</td>
+                                <td>{{ loan.currency_loan }}</td>
+                                <td>{{ loan.date_of_start }}</td>
+                                <td>{{ loan.date_of_end }}</td>
+                                <td>{{ loan.months }}</td>
+                                <td>{{ loan.status }}</td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+                </table>
+        </div>
+        {% endif %}
+
+</div>
+
+<script src="{% static 'loans/js/calculateLoan.js' %}"></script>
+
+
+{% endblock %}

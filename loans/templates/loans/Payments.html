@@ -1,0 +1,38 @@
+{% extends 'user/base_form.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+        <link type="text/css" href="{% static 'loans/css/Apply_for_a_loan.css' %}" rel="stylesheet">
+</head>
+
+<header>
+        <h1>Платежи</h1>
+        <p>Выполняйте платежи здесь, {{ user.username }}!</p>
+        <p>P.S. В данном случае только оплата кредита</p>
+</header>
+
+<br/>
+
+<div class="container">
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'payments' %}" class="block__form">
+                {% csrf_token %}
+                <p>Ваш счет:</p>
+                {{ form.sender_id }}
+                <p>Счет кредита</p>
+                {{ form.destination_account_number }}
+                <p>Сумма оплаты:</p>
+                {{ form.amount }}
+                <button type="submit" >Оплатить</button>
+        </form>
+
+        {% endif %}
+
+</div>
+
+
+
+{% endblock %}
