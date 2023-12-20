@@ -1,0 +1,94 @@
+{% extends 'user/base_form.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+        <link type="text/css" href="{% static 'bankaccount/css/money_transfer.css' %}" rel="stylesheet">
+</head>
+
+<header>
+        <h1>Перевод денежных средств</h1>
+        <p>Совершайте денежные переводы здесь, {{ user.username }}!</p>
+</header>
+
+<br/>
+<main class="block">
+
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'money_transfer' %}" class="block__form">
+
+                {% csrf_token %}
+                <div class="block">
+                        <div class="block__card">
+                            <div class="card">
+                                        <div class="visa_logo">
+                                            <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png" alt="">
+                                        </div>
+                                        <div class="visa_info">
+                                            <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" alt="">
+                                            {{ form.sender_id }}
+                                        </div>
+                                        <div class="visa_crinfo">
+                                            <p>02/12</p>
+                                            <p>{{ user.surname}} {{ user.username }}</p>
+                                        </div>
+                            </div>
+                        </div>
+                </div>
+        
+                <div class="block">
+                        <div class="block__card">
+                            <div class="card">
+                                        <div class="visa_logo">
+                                            <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png" alt="">
+                                        </div>
+                                        <div class="visa_info">
+                                            <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" alt="">
+                                            {{ form.destination_account_number }}
+                                        </div>
+                                        <div class="visa_crinfo">
+                                            <p>02/12</p>
+
+<!--                                                <button class="trigger">more info</button>-->
+
+                                        </div>
+                            </div>
+                            <div class="form-group">
+                            </div>
+                        </div>
+                </div>
+
+                <div class="block__amount">
+                        <p>Сумма перевода:</p>
+                        {{ form.amount }}
+                        <p>Код подтверждения при сумме больше 1000:</p>
+                        {{ form.confirmation_code }}
+
+                        <button type="submit" >Перевести</button>
+                       <input type="submit" name="request_new_code" value="Запросить новый код">
+                </div>
+        
+        </form>
+
+        {% else %}
+           <a href="{% url 'login' %}">Вход</a> |
+           <a href="{% url 'registration' %}">Регистрация</a>
+        {% endif %}
+
+        </form>
+
+
+</main>
+
+<div class="modal">
+    <div class="modal-content">
+        <span class="close-button">×</span>
+        <h1>User: В процессе доработки {{ username }}</h1>
+    </div>
+</div>
+
+<script src="{% static 'bankaccount/js/modal.js' %}"></script>
+
+{% endblock %}
